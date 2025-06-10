@@ -54,6 +54,6 @@ class ProductApiTest extends TestCase
 
         $response->assertStatus(403);
         $this->assertDatabaseMissing('products', ['name' => $productData['name']]);
-    
+
     }
 }
