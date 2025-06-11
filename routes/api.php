@@ -11,3 +11,6 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products', [ProductController::class, 'create'])
     ->middleware(['auth:sanctum', 'can:manage-products'])
     ->name('create.product');
+Route::post('/products/update/{product}', [ProductController::class, 'update'])
+    ->middleware(['auth:sanctum', 'can:manage-products'])
+    ->name('update.product');

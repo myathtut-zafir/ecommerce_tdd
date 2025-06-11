@@ -23,7 +23,6 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-
         return $user->role === 'admin';
     }
 
@@ -41,7 +40,6 @@ class ProductPolicy
     // Allow all actions for admin, bypass checks
     public function before(User $user, $ability)
     {
-
         if ($user->role === 'admin') {
             return true;
         }
