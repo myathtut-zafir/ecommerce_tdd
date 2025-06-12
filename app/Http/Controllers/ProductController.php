@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductResource;
-use App\Models\Product;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
+
+
+    public function __construct(private ProductService $productService)
+    {
+
+    }
+
     public function index()
     {
 
-        $products = Product::all();
+        return $this->productService->getAllProducts();
 
-        return ProductResource::collection($products);
+    }
 
+    public function create(StoreProductRequest $request)
+    {
+        return $this->productService->create($request);
     }
 
 

@@ -3,7 +3,7 @@
 namespace Tests\Feature\Feature\Product;
 
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -22,5 +22,25 @@ class ProductApiTest extends TestCase
                     '*' => ['id', 'name', 'price', 'stock', 'desc', 'created_at']
                 ]
             ]);
+    }
+
+    #[Test] public function an_admin_can_create_a_product()
+    {
+        $admin =User::factory()->admin()->create();
+        $productData = Product::factory()->make()->toArray();
+
+        $response = $this->actingAs($admin, 'sanctum')
+        ->postJson('/api/products', $productData);
+
+        $response->assertStatus(201)
+            ->assertJsonFragment([
+                'name' => $productData['name'],
+                'price' => (float)$productData['price'],
+            ]);
+
+        $this->assertDatabaseHas('products', [
+            'name' => $productData['name'],
+            'price' => $productData['price'],
+        ]);
     }
 }
