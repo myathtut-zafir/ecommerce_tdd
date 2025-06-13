@@ -25,4 +25,26 @@ class LoginApiTest extends TestCase
         ]);
 
     }
+
+    #[Test] public function a_user_profile_successfully()
+    {
+        $userData = [
+            'email' => 'john@example.com',
+            'password' => 'password123',
+        ];
+        $response = $this->postJson('/api/login', $userData);
+        $token = $response->json('token');
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->get('/api/user');
+
+
+
+        $response->assertStatus(200)
+        ->assertJsonStructure([
+            'message',
+            'user' => ['id', 'name', 'email', 'created_at'],
+        ]);
+    }
 }
