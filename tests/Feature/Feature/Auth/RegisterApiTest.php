@@ -9,15 +9,7 @@ use Tests\TestCase;
 
 class RegisterApiTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
-    }
 
     #[Test] public function a_user_can_register_successfully()
     {
